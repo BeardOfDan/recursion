@@ -10,16 +10,16 @@ const stringifyJSON = function (obj) {
     if (dontQuote === true) {
       return null;
     }
-    return "null";
+    return 'null';
   }
 
-  let prefix = "prefix";
-  let postfix = "postfix";
-  let result = "recursive call";
+  let prefix = 'prefix';
+  let postfix = 'postfix';
+  let result = 'recursive call';
 
-  if ((typeof obj === "object") && (!Array.isArray(obj))) { // look for properties
-    prefix = "{";
-    postfix = "}";
+  if ((typeof obj === 'object') && (!Array.isArray(obj))) { // look for properties
+    prefix = '{';
+    postfix = '}';
 
     // holds all of the keys + properties
     let keyVals = Object.keys(obj);
@@ -30,7 +30,7 @@ const stringifyJSON = function (obj) {
       const thisKey = keyVals[i];
       const thisVal = obj[thisKey];
 
-      if (typeof thisVal === "function") {
+      if (typeof thisVal === 'function') {
         continue;
       } else if (thisVal === undefined) {
         continue;
@@ -40,42 +40,42 @@ const stringifyJSON = function (obj) {
 
       stringified = stringifyJSON(thisVal, true);
 
-      if (typeof thisVal === "string") {
+      if (typeof thisVal === 'string') {
         stringified = `"${stringified}"`;
       }
 
       let thisResult = `"${thisKey}":${stringified}`;
 
       if (i < keyVals.length - 1) {
-        thisResult += ",";
+        thisResult += ',';
       }
 
       contents.push(thisResult);
     }
 
-    result = "";
+    result = '';
     for (let i = 0; i < contents.length; i++) {
       result += contents[i];
     }
 
     return prefix + result + postfix;
   } else if (Array.isArray(obj)) {
-    prefix = "[";
-    postfix = "]";
-    result = "";
+    prefix = '[';
+    postfix = ']';
+    result = '';
 
     for (let i = 0; i < obj.length; i++) {
       let elem = obj[i];
 
-      if (typeof elem === "object") {
+      if (typeof elem === 'object') {
         elem = stringifyJSON(elem, true);
-      } else if (typeof elem === "string") {
+      } else if (typeof elem === 'string') {
         elem = `"${elem}"`;
       }
 
       result += elem;
       if (i < obj.length - 1) {
-        result += ",";
+        result += ',';
       }
     }
 
@@ -83,7 +83,7 @@ const stringifyJSON = function (obj) {
   } else { // presumably a primative type
     if (dontQuote === true) {
       return obj;
-    } else if (typeof obj === "string") {
+    } else if (typeof obj === 'string') {
       return `"${obj}"`;
     } else {
       return String(obj);
